@@ -4,5 +4,5 @@
 
 <h2>Documents</h2>
 
-{{#length}}<p><a href="#new">create one</a></p><ul>{{#models}}{{#attributes}}<li><a href="#documents/{{id}}">{{title}}</a></li>{{/attributes}}{{/models}}</ul>{{/length}}
+{{#length}}<p><a href="#new">create one</a></p><ul>{{#models}}{{#attributes}}<li><a href="#documents/{{id}}">{{title}}</a> <small>(<a href="#destroy/{{id}}">delete</a>)</small></li>{{/attributes}}{{/models}}</ul>{{/length}}
 {{^length}}<p>No documents exist. <a href="#new">create one</a></p>{{/length}}

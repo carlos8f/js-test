@@ -25,7 +25,8 @@ App.Controllers.Documents = Backbone.Router.extend({
     routes: {
         "documents/:id":            "edit",
         "":                         "index",
-        "new":                      "newDoc"
+        "new":                      "newDoc",
+        "destroy/:id":              "destroy"
     },
 
     edit: function(id) {
@@ -55,6 +56,24 @@ App.Controllers.Documents = Backbone.Router.extend({
 
     newDoc: function() {
         new App.Views.Edit({ model: new Document() });
+    },
+
+    destroy: function(id) {
+        var doc = new Document({ id: id });
+        if (confirm('Really delete ' + doc.id + '?')) {
+          doc.destroy({
+              success: function(model, resp) {
+                  Backbone.history.navigate('', true);
+              },
+              error: function() {
+                  new Error({ message: 'Could not delete document.' });
+                  window.location.hash = '#';
+              }
+          });
+        }
+        else {
+          window.location.hash = '#';
+        }
     }
 });
 
@@ -83,8 +102,7 @@ App.Views.Edit = App.View.extend({
     },
 
     save: function() {
-        var self = this;
-        var msg = this.model.isNew() ? 'Successfully created!' : "Saved!";
+        var msg = this.model.isNew() ? 'Document created!' : "Document updated!";
 
         this.model.save({ title: this.$('[name=title]').val(), body: this.$('[name=body]').val() }, {
             success: function(model, resp) {
@@ -127,10 +145,7 @@ App.Views.Notice = App.View.extend({
     },
 
     render: function() {
-        var view = this;
-
         alert(this.message);
-
         return this;
     }
 });
