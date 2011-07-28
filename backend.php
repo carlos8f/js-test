@@ -32,7 +32,11 @@ elseif (preg_match('~^documents/(\w+)$~', $url, $matches)) {
     $docs[$id] = $input;
   }
 
-  $response = isset($docs[$id]) ? $docs[$id] : FALSE;
+  if (!isset($docs[$id])) {
+    header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+    exit();
+  }
+  $response = $docs[$id];
 }
 
 print json_encode($response);
