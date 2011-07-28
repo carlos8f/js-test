@@ -12,20 +12,20 @@
     em { font-weight: normal; font-family: Georgia, serif; }
 	</style>
 
-<script type="text/javascript" src="underscore.js"></script>
-<script type="text/javascript" src="json2.js"></script>
-<script type="text/javascript" src="zepto.js"></script>
-<script type="text/javascript" src="backbone.js"></script>
-<script type="text/javascript" src="mustache.js"></script>
-<script type="text/javascript" src="ICanHaz.js"></script>
-<script type="text/javascript" src="test.js"></script>
+  <script type="text/javascript" src="js/lib/underscore.js"></script>
+  <script type="text/javascript" src="js/lib/json2.js"></script>
+  <script type="text/javascript" src="js/lib/jquery.js"></script>
+  <script type="text/javascript" src="js/lib/backbone.js"></script>
+  <script type="text/javascript" src="js/lib/mustache.js"></script>
+  <script type="text/javascript" src="js/test.js"></script>
+
 </head>
 <body>
-<div id="page">
-
-<h1>.js test!</h1>
-
-</div>
+  <div id="app"></div>
+  <script type="text/javascript">
+      $(function() {
+          App.init();
+      });
+  </script>
 </body>
 </html>
-
