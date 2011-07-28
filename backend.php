@@ -10,13 +10,14 @@ $url = isset($_REQUEST['q']) ? $_REQUEST['q'] : '';
 if ($url == 'documents') {
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($input = file_get_contents("php://input")) {
-      $input = json_decode($input);
-      if (empty($input)) {
+      if ($input = json_decode($input)) {
+        $input->id = substr(md5(mt_rand()), 0, 4);
+        $docs[$input->id] = $response = $input;
+      }
+      else {
         header($_SERVER['SERVER_PROTOCOL'] . ' 403 Bad Request');
         exit();
       }
-      $input->id = substr(md5(mt_rand()), 0, 4);
-      $docs[$input->id] = $response = $input;
     }
   }
   $response = array_values($docs);
@@ -31,13 +32,14 @@ elseif (preg_match('~^documents/(\w+)$~', $url, $matches)) {
     case 'PUT':
     case 'POST':
       if ($input = file_get_contents("php://input")) {
-        $input = json_decode($input);
-        if (!isset($docs[$id]) || empty($input)) {
+        if ($input = json_decode($input)) {
+          $docs[$id] = $input;
+          $response = $docs[$id];
+        }
+        else {
           header($_SERVER['SERVER_PROTOCOL'] . ' 403 Bad Request');
           exit();
         }
-        $docs[$id] = $input;
-        $response = $docs[$id];
       }
       break;
     case 'DELETE':
